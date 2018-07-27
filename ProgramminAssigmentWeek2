@@ -14,3 +14,23 @@ pollutantmean <- function(directory,pollutant,id = 1:332){
 
 }
 
+complete <- function(directory, id = 1:332){
+  
+  files <- list.files(directory,full.names=TRUE)
+  data <- data.frame()
+  complete_data <- data.frame()
+  
+  for(i in 1:length(id)){
+    
+    data <- read.csv(files[id[i]])
+    complete_data[i,1] <- id[i]
+    complete_data[i,2] <- sum( !is.na(data$"nitrate") & !is.na(data$"sulfate") )
+    
+
+  }
+  
+  colnames(complete_data) <- c("id", "nobs")
+  print(complete_data)
+  
+  
+}
