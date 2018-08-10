@@ -34,3 +34,28 @@ complete <- function(directory, id = 1:332){
   
   
 }
+
+corr <- function(directory, threshold = 0){
+  
+  correlations <- vector("numeric", length = 0)
+  data <- complete(directory)[,2]
+  
+  files <- list.files(directory,full.names=TRUE)
+  complete_data <- data.frame()
+  
+  for(i in 1:332){
+    
+    if(data[i] > threshold){
+      
+      complete_data <- read.csv(files[i])
+      calc <- cor(complete_data$sulfate,complete_data$nitrate,use = "pairwise.complete.obs")
+      
+      correlations <- c(correlations,calc)
+      
+    }
+    
+  }
+      
+  return(correlations)
+  
+}
